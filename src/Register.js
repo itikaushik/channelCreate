@@ -127,27 +127,30 @@ const Register = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     let regObj = {
-      AnalyticsId,
-      ChannelName,
-      ContentOwner,
-      ServiceID,
-      LaunchDate,
-      Country,
-      OriginURL,
-      OriginInput: { enable_harvestor, harvestor_config },
-      HideOriginPath,
-      Enableoriginshield,
-      OriginShieldRegion,
-      SSAIRule,
-      Coppa,
-      EPGInfo: { style, source_url },
-      State,
-      AuthToken,
+      "Analytics ID": AnalyticsId,
+      "Channel Name": ChannelName,
+      "Content Owner": ContentOwner,
+      "Service ID": ServiceID,
+      "Launch Date": LaunchDate,
+      Country: Country,
+      "Origin URL": OriginURL,
+      "Origin Input": {
+        enable_harvestor: enable_harvestor,
+        harvestor_config: harvestor_config,
+      },
+      "Hide Origin Path": HideOriginPath,
+      "Enable origin shield": Enableoriginshield,
+      "Origin Shield Region": OriginShieldRegion,
+      "SSAI Rule": SSAIRule,
+      Coppa: Coppa,
+      "EPG Info": { style: style, source_url: source_url },
+      State: State,
+      "Auth Token": AuthToken,
     };
     if (IsValidate()) {
-    console.log(regObj);
-    formDataState(regObj);
-    formPageChange(false);
+      console.log(regObj);
+      formDataState(regObj);
+      formPageChange(false);
       fetch("http://107.109.131.23:8000/channelCreation", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -163,12 +166,12 @@ const Register = () => {
     }
   };
 
-  const handleReset=(e)=>{
-    e.preventDefault()
-    formDataState({})
-    formPageChange(true)
-    initialState()
-  }
+  const handleReset = (e) => {
+    e.preventDefault();
+    formDataState({});
+    formPageChange(true);
+    initialState();
+  };
   return (
     <div>
       <div className="offset-lg-3 col-lg-6">
@@ -402,11 +405,19 @@ const Register = () => {
             )}
             <div className="card-footer">
               {formPage && formPage ? (
-                <button type="button" className="btn btn-primary" onClick={handlesubmit}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handlesubmit}
+                >
                   Create
                 </button>
               ) : (
-                <button type="button" className="btn btn-primary" onClick={handleReset}>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleReset}
+                >
                   Go back
                 </button>
               )}
