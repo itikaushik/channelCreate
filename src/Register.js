@@ -104,7 +104,10 @@ const Register = () => {
   };
   const changeDateFormat=(date)=>{
     var parts = date.split('-');
-    var reversedDate = parts.reverse().join('-');
+    const year = parts[0]
+    const month = parts[1]
+    const day = parts[2]
+    var reversedDate = month+'/'+day+'/'+year;
     return reversedDate
   }
 
@@ -153,7 +156,7 @@ const Register = () => {
       "Auth Token": AuthToken,
     };
     if (IsValidate()) {
-      console.log(regObj);
+      // console.log(regObj);
       formDataState(regObj);
       formPageChange(false);
       fetch("http://107.109.131.23:8000/channelCreation", {
