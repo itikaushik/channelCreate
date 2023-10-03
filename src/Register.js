@@ -102,6 +102,11 @@ const Register = () => {
       coppaChange(false);
     }
   };
+  const changeDateFormat=(date)=>{
+    var parts = date.split('-');
+    var reversedDate = parts.reverse().join('-');
+    return reversedDate
+  }
 
   const initialState = () => {
     analyticsIdChange("");
@@ -131,7 +136,7 @@ const Register = () => {
       "Channel Name": ChannelName,
       "Content Owner": ContentOwner,
       "Service ID": ServiceID,
-      "Launch Date": LaunchDate,
+      "Launch Date": changeDateFormat(LaunchDate),
       Country: Country,
       "Origin URL": OriginURL,
       "Origin Input": {
