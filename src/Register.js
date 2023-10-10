@@ -20,7 +20,6 @@ const Register = () => {
   const [source_url, epgSourceURLChange] = useState("");
   const [State, stateChange] = useState("In Development");
   const [AuthToken, authTokenChange] = useState("");
-
   const [formPage, formPageChange] = useState(true);
   const [formData, formDataState] = useState({});
 
@@ -48,17 +47,13 @@ const Register = () => {
       isproceed = false;
       errormessage += " SSAI Rule";
     }
-    if (source_url === "") {
-      isproceed = false;
-      errormessage += " EPG Source URL ";
-    }
     if (State === "") {
       isproceed = false;
       errormessage += " State ";
     }
     if (style === "") {
       isproceed = false;
-      errormessage += " State ";
+      errormessage += " EPG Style ";
     }
     if (AuthToken === "") {
       isproceed = false;
@@ -102,14 +97,14 @@ const Register = () => {
       coppaChange(false);
     }
   };
-  const changeDateFormat=(date)=>{
-    var parts = date.split('-');
-    const year = parts[0]
-    const month = parts[1]
-    const day = parts[2]
-    var reversedDate = month+'/'+day+'/'+year;
-    return reversedDate
-  }
+  const changeDateFormat = (date) => {
+    var parts = date.split("-");
+    const year = parts[0];
+    const month = parts[1];
+    const day = parts[2];
+    var reversedDate = month + "/" + day + "/" + year;
+    return reversedDate;
+  };
 
   const initialState = () => {
     analyticsIdChange("");
@@ -156,9 +151,9 @@ const Register = () => {
       "Auth Token": AuthToken,
     };
     if (IsValidate()) {
-      // console.log(regObj);
-      formDataState(regObj);
-      formPageChange(false);
+      console.log(regObj);
+    formDataState(regObj);
+    formPageChange(false);
       fetch("http://107.109.131.23:8000/channelCreation", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -182,253 +177,301 @@ const Register = () => {
   };
   return (
     <div>
-      <div className="offset-lg-3 col-lg-6">
-        <form className="container">
-          <div className="card">
-            <div className="card-header">
-              <h1>Channel Creation</h1>
-            </div>
-            {formPage && formPage ? (
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Analytics Id </label>
-                      <input
-                        value={AnalyticsId}
-                        onChange={(e) => analyticsIdChange(e.target.value)}
-                        className="form-control"
-                      ></input>
+      <div className="create-channel-div col-lg-8">
+        <form className="container form-div">
+          <div className="card form-div-card">
+            <div className="card-body">
+              <nav class="navbar bg-body-tertiary bg-primary">
+                <div class="container-fluid">
+                  <span class="navbar-brand mb-0 h1">
+                    Channel Creation Dashboard
+                  </span>
+                </div>
+              </nav>
+              <div className="card-body-element">
+                {/* <div className="col-lg-3 left-div">
+                  <h2 className="page-title">Channel Creation Dashboard</h2>
+                </div> */}
+                <div className="col-lg-12 right-div">
+                  {formPage && formPage ? (
+                    <div>
+                      <div className="header-div">
+                        <h4 className="title">Create Channels</h4>
+                        <h5 className="subtitle">
+                          Fill out this form to create a channel
+                        </h5>
+                      </div>
+                      <div className="row">
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Analytics Id</label>
+                            <input
+                              value={AnalyticsId}
+                              onChange={(e) =>
+                                analyticsIdChange(e.target.value)
+                              }
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Channel Name</label>
+                            <span className="imp-mark">&#42;</span>
+                            <input
+                              value={ChannelName}
+                              onChange={(e) =>
+                                channelNameChange(e.target.value)
+                              }
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Content Owner</label>
+                            <span className="imp-mark">&#42;</span>
+                            <input
+                              value={ContentOwner}
+                              onChange={(e) =>
+                                contentOwnerChange(e.target.value)
+                              }
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Service Id </label>
+                            <span className="imp-mark">&#42;</span>
+                            <input
+                              value={ServiceID}
+                              onChange={(e) => serviceIdChange(e.target.value)}
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Launch Date</label>
+                            <input
+                              value={LaunchDate}
+                              type="date"
+                              onChange={(e) => launchDateChange(e.target.value)}
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Country </label>
+                            <input
+                              value={Country}
+                              onChange={(e) => countryChange(e.target.value)}
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Origin URL</label>
+                            <span className="imp-mark">&#42;</span>
+                            <textarea
+                              value={OriginURL}
+                              onChange={(e) => originURLChange(e.target.value)}
+                              className="form-control"
+                            ></textarea>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Hide Origin Path</label>
+                            <br></br>
+                            <select
+                              className="form-select"
+                              value={HideOriginPath}
+                              onChange={(e) => handleOriginPath(e.target.value)}
+                            >
+                              <option value={true}>True</option>
+                              <option value={false}>False</option>
+                            </select>
+                          </div>
+                        </div>
+                        <hr style={{ marginTop: "20px" }} />
+                        <div>
+                          <h5>Origin Input</h5>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Enable Harvestor</label>
+                            <br></br>
+                            <select
+                              className="form-select"
+                              onChange={(e) =>
+                                handleEnableHarvestor(e.target.value)
+                              }
+                              value={enable_harvestor}
+                            >
+                              <option value={true}>True</option>
+                              <option value={false}>False</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Harvestor Config</label>
+                            <input
+                              value={harvestor_config}
+                              onChange={(e) =>
+                                harvestorConfigChange(e.target.value)
+                              }
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Enable Origin Shield</label>
+                            <br></br>
+                            <select
+                              className="form-select"
+                              onChange={(e) =>
+                                handleOriginShield(e.target.value)
+                              }
+                              value={Enableoriginshield}
+                            >
+                              <option value={true}>True</option>
+                              <option value={false}>False</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Origin Shield Region</label>
+                            <input
+                              value={OriginShieldRegion}
+                              onChange={(e) =>
+                                originShieldRegionChange(e.target.value)
+                              }
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <hr style={{ marginTop: "20px" }} />
+                        <div>
+                          <h5>EPG Info</h5>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>EPG Style</label>
+                            <span className="imp-mark">&#42;</span>
+                            <input
+                              value={style}
+                              onChange={(e) => epgStyleChange(e.target.value)}
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>EPG Source URL</label>
+                            <textarea
+                              value={source_url}
+                              onChange={(e) =>
+                                epgSourceURLChange(e.target.value)
+                              }
+                              className="form-control"
+                            ></textarea>
+                          </div>
+                        </div>
+                        <hr style={{ marginTop: "20px" }} />
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>SSAI Rule</label>
+                            <span className="imp-mark">&#42;</span>
+                            <input
+                              value={SSAIRule}
+                              onChange={(e) => ssaiRuleChange(e.target.value)}
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Coppa</label>
+                            <br></br>
+                            <select
+                              className="form-select"
+                              onChange={(e) =>
+                                handleCoppaChange(e.target.value)
+                              }
+                              value={Coppa}
+                            >
+                              <option value={true}>True</option>
+                              <option value={false}>False</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>State</label>
+                            <span className="imp-mark">&#42;</span>
+                            <input
+                              value={State}
+                              disabled
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                        <div className="col-lg-6">
+                          <div className="form-group">
+                            <label>Auth Token</label>
+                            <span className="imp-mark">&#42;</span>
+                            <input
+                              value={AuthToken}
+                              onChange={(e) => authTokenChange(e.target.value)}
+                              className="form-control"
+                            ></input>
+                          </div>
+                        </div>
+                      </div>
+                      <hr />
+                      <div>
+                        <button
+                          type="button"
+                          className="btn btn-primary submit-btn"
+                          onClick={handlesubmit}
+                        >
+                          Create
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Channel Name</label>
-                      <input
-                        value={ChannelName}
-                        onChange={(e) => channelNameChange(e.target.value)}
-                        className="form-control"
-                      ></input>
+                  ) : (
+                    <div>
+                      <div className="header-div">
+                        <h4 className="title">Channel Details</h4>
+                        <h5 className="subtitle">
+                          Previews the JSON response sent to create the channel
+                        </h5>
+                      </div>
+                      <hr />
+                      <div className="row">
+                        <pre>{JSON.stringify(formData, null, 2)}</pre>
+                      </div>
+                      <hr />
+                      <div>
+                        <button
+                          type="button"
+                          className="btn btn-primary submit-btn"
+                          onClick={handleReset}
+                        >
+                          Go back
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Content Owner</label>
-                      <input
-                        value={ContentOwner}
-                        onChange={(e) => contentOwnerChange(e.target.value)}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Service Id </label>
-                      <input
-                        value={ServiceID}
-                        onChange={(e) => serviceIdChange(e.target.value)}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>
-                        Launch Date <span className="errmsg"></span>
-                      </label>
-                      <input
-                        value={LaunchDate}
-                        type="date"
-                        onChange={(e) => launchDateChange(e.target.value)}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Country </label>
-                      <input
-                        value={Country}
-                        onChange={(e) => countryChange(e.target.value)}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Origin URL</label>
-                      <textarea
-                        value={OriginURL}
-                        onChange={(e) => originURLChange(e.target.value)}
-                        className="form-control"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Hide Origin Path</label>
-                      <br></br>
-                      <select
-                        className="form-control"
-                        value={HideOriginPath}
-                        onChange={(e) => handleOriginPath(e.target.value)}
-                      >
-                        <option value={true}>True</option>
-                        <option value={false}>False</option>
-                      </select>
-                    </div>
-                  </div>
-                  <hr style={{ marginTop: "20px" }} />
-                  <div>
-                    <h5>Origin Input</h5>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Enable Harvestor</label>
-                      <br></br>
-                      <select
-                        className="form-control"
-                        onChange={(e) => handleEnableHarvestor(e.target.value)}
-                        value={enable_harvestor}
-                      >
-                        <option value={true}>True</option>
-                        <option value={false}>False</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Harvestor Config</label>
-                      <input
-                        value={harvestor_config}
-                        onChange={(e) => harvestorConfigChange(e.target.value)}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Enable Origin Shield</label>
-                      <br></br>
-                      <select
-                        className="form-control"
-                        onChange={(e) => handleOriginShield(e.target.value)}
-                        value={Enableoriginshield}
-                      >
-                        <option value={true}>True</option>
-                        <option value={false}>False</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Origin Shield Region</label>
-                      <input
-                        value={OriginShieldRegion}
-                        onChange={(e) =>
-                          originShieldRegionChange(e.target.value)
-                        }
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <hr style={{ marginTop: "20px" }} />
-                  <div>
-                    <h5>EPG Info</h5>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>EPG Style</label>
-                      <input
-                        value={style}
-                        onChange={(e) => epgStyleChange(e.target.value)}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>EPG Source URL</label>
-                      <textarea
-                        value={source_url}
-                        onChange={(e) => epgSourceURLChange(e.target.value)}
-                        className="form-control"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <hr style={{ marginTop: "20px" }} />
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>SSAI Rule</label>
-                      <input
-                        value={SSAIRule}
-                        onChange={(e) => ssaiRuleChange(e.target.value)}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Coppa</label>
-                      <br></br>
-                      <select
-                        className="form-control"
-                        onChange={(e) => handleCoppaChange(e.target.value)}
-                        value={Coppa}
-                      >
-                        <option value={true}>True</option>
-                        <option value={false}>False</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>State</label>
-                      <input
-                        value={State}
-                        disabled
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="form-group">
-                      <label>Auth Token</label>
-                      <input
-                        value={AuthToken}
-                        onChange={(e) => authTokenChange(e.target.value)}
-                        className="form-control"
-                      ></input>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
-            ) : (
-              <div className="card-body">
-                <div className="row">
-                  {/* {JSON.stringify(formData)} */}
-                  <pre>{JSON.stringify(formData, null, 2)}</pre>
-                </div>
-              </div>
-            )}
-            <div className="card-footer">
-              {formPage && formPage ? (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handlesubmit}
-                >
-                  Create
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleReset}
-                >
-                  Go back
-                </button>
-              )}
             </div>
           </div>
         </form>
